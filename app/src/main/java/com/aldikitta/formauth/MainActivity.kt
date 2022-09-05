@@ -31,10 +31,10 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = com.aldikitta.formauth.Screen.LoginScreen.route
+                        startDestination = com.aldikitta.formauth.Screen.LoginScreen.fullRoute
                     ) {
                         composable(
-                            route = com.aldikitta.formauth.Screen.LoginScreen.route
+                            route = com.aldikitta.formauth.Screen.LoginScreen.fullRoute
                         ) {
                             LoginScreen(navController = navController)
                         }

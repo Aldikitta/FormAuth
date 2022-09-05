@@ -14,9 +14,13 @@ import androidx.navigation.NavController
 fun DashboardScreen(
     navController: NavController,
     onChange: (String) -> Unit = {},
-//    text: String
+//    usernameFromLogin: String
 ) {
-    var textEmail by remember { mutableStateOf("") }//g
+    var username by remember { mutableStateOf("") }
+
+//    LaunchedEffect(key1 = Unit){
+//        username = usernameFromLogin
+//    }
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -25,7 +29,7 @@ fun DashboardScreen(
         Button(onClick = {
             navController.navigate(Screen.LoginScreen.route)
         }) {
-            Text(text = "Logout")
+            Text(text = username)
         }
 
     }
