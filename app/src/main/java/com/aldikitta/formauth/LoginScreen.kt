@@ -104,6 +104,7 @@ fun ShowForm(
                 "TAG",
                 "THIS IS FROM BUTTON $name $surname $email $phone $password $confirmPassword"
             )
+            navController.navigate("dashboard_screen/$name/$surname/$email/$phone")
         } else {
             Toast.makeText(context, "Please enter correct field", Toast.LENGTH_SHORT).show()
         }
@@ -219,11 +220,10 @@ fun ShowForm(
                 onNext = { focusManager.clearFocus() }
             )
         )
-        Button(onClick = {
-            register(name, surName, email, phone, password, confirmPassword)
-//            navController.navigate("dashboard_screen/$name/$surName/$email/$phone")
-            navController.navigate("dashboard_screen/$name/$surName/$email/$phone")
-        }) {
+        Button(
+            onClick = { register(name, surName, email, phone, password, confirmPassword) },
+            enabled = validateData(name, surName, email, phone, password, confirmPassword)
+        ) {
             Text(text = "Take me in")
         }
     }
