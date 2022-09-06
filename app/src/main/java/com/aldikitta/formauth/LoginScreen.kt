@@ -34,11 +34,13 @@ fun LoginScreen(
     navController: NavController,
     onChange: (String) -> Unit = {},
 ) {
-    ShowForm()
+    ShowForm(navController)
 }
 
 @Composable
-fun ShowForm() {
+fun ShowForm(
+    navController: NavController,
+) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
@@ -107,7 +109,6 @@ fun ShowForm() {
         }
     }
 
-    val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -120,19 +121,7 @@ fun ShowForm() {
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(vertical = 16.dp)
         )
-        Text(
-            text = if (currentHour in 0..11) {
-                "Good Morning"
-            } else if (currentHour in 12..15) {
-                "Good Afternoon"
-            } else if (currentHour in 16..20) {
-                "Good Evening"
-            } else if (currentHour in 21..23) {
-                "Good Night"
-            } else {
-                ""
-            }
-        )
+
 
         CustomTextfield(
             value = name,
@@ -232,6 +221,8 @@ fun ShowForm() {
         )
         Button(onClick = {
             register(name, surName, email, phone, password, confirmPassword)
+//            navController.navigate("dashboard_screen/$name/$surName/$email/$phone")
+            navController.navigate("dashboard_screen/$name/$surName/$email/$phone")
         }) {
             Text(text = "Take me in")
         }

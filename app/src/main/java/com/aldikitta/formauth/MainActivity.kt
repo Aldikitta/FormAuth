@@ -3,19 +3,15 @@ package com.aldikitta.formauth
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.aldikitta.formauth.ui.theme.FormAuthTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,15 +27,42 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = com.aldikitta.formauth.Screen.LoginScreen.fullRoute
+                        startDestination = Screen.LoginScreen.route
                     ) {
                         composable(
-                            route = com.aldikitta.formauth.Screen.LoginScreen.fullRoute
+                            route = Screen.LoginScreen.route,
+//                            arguments = listOf(
+//                                navArgument("name"){
+//                                    type = NavType.StringType
+//                                    defaultValue = "Aldi"
+//                                    nullable = true
+//                                }
+//                            )
                         ) {
                             LoginScreen(navController = navController)
                         }
-                        composable(route = com.aldikitta.formauth.Screen.DashboardScreen.route) {
-                            DashboardScreen(navController = navController)
+                        composable(route = "dashboard_screen/{name}/{surname}/{email}/{phone}",
+                            arguments = listOf(
+                                navArgument(name = "name") {
+                                    type = NavType.StringType
+                                },
+                                navArgument(name = "surname") {
+                                    type = NavType.StringType
+                                },
+                                navArgument(name = "email") {
+                                    type = NavType.StringType
+                                },
+                                navArgument(name = "phone") {
+                                    type = NavType.StringType
+                                }
+                            )) {
+                            DashboardScreen(
+                                navController = navController,
+                                name = it.arguments?.getString("name")!!,
+                                surname = it.arguments?.getString("surname")!!,
+                                email = it.arguments?.getString("email")!!,
+                                phoneNumber = it.arguments?.getString("phone")!!,
+                            )
                         }
                     }
                 }

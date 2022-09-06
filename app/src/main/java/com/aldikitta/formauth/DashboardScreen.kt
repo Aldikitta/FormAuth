@@ -9,28 +9,39 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import java.util.*
 
 @Composable
 fun DashboardScreen(
     navController: NavController,
-    onChange: (String) -> Unit = {},
-//    usernameFromLogin: String
+    name: String,
+    surname: String,
+    email: String,
+    phoneNumber: String
 ) {
-    var username by remember { mutableStateOf("") }
+    val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
 
-//    LaunchedEffect(key1 = Unit){
-//        username = usernameFromLogin
-//    }
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Button(onClick = {
-            navController.navigate(Screen.LoginScreen.route)
-        }) {
-            Text(text = username)
-        }
-
+        Text(
+            text = if (currentHour in 0..11) {
+                "Good Morning $name"
+            } else if (currentHour in 12..15) {
+                "Good Afternoon $name"
+            } else if (currentHour in 16..20) {
+                "Good Evening $name"
+            } else if (currentHour in 21..23) {
+                "Good Night $name"
+            } else {
+                ""
+            }
+        )
+        Text(text = "Here is your details")
+        Text(text = "Surname: $surname")
+        Text(text = "Email: $email")
+        Text(text = "Phone Number: $phoneNumber")
     }
 }
